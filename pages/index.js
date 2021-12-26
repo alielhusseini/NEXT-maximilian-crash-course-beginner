@@ -66,7 +66,7 @@ export default function HomePage(props) {
  - not all pages need the pre-rendering like the new-meetup page (form), it can be static (static html with no content (no initial props))
  - Two forms of pre-rendering: Static Generation & Server-side Rendering:
 
- 1) Static Generation (for pages that don't get updated frequently like personal blogs):
+ 1) Static Generation SSG(static side generation) | ISG (incremental side generation, if it has revalidate) (for pages that don't get updated frequently like personal blogs):
     > Only for components inside the pages folder (function components)
     > For pages & their contents that don't change all the time
     > It's pre-rendered when you build the nextJS project for production (not pre-rendered on the fly on the server when a req is made)
