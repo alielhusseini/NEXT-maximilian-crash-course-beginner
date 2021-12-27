@@ -51,7 +51,10 @@ export async function getStaticProps(context) { // it can be async or not
                 }
             ))
         },
-        revalidate: 10 // this page will be generated on the server at least every 10s if there are req to this page --> regenerated will replace pregenerated ==> you ensure  your data is never older than 10s
+        revalidate: 10 // this page will be generated on the server at least every 10s if there are req to this page (for 10 continuous sec) --> regenerated will replace pregenerated ==> you ensure your data is never older than 10s
+
+        // * live: 100K/sec => getServerSideProps => 100K req/database [BAD]
+        // * live: 100K/sec => getStaticProps => 1 req/sec on the database [Super Awesome]
     }
 }
 
