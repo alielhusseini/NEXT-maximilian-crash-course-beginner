@@ -2,6 +2,7 @@
 import MeetupDetail from "../../components/meetups/MeetupDetail"
 import { MongoClient, ObjectId } from "mongodb"
 import Head from 'next/head'
+import { useRouter } from "next/router"
 
 export async function getStaticPaths() { // fetch ids
     // as a developer you wouldn't hard code this, but you would fetch the supported ids from a db or api & generate this array dynamically
@@ -66,6 +67,10 @@ export async function getStaticProps(context) { // during build time
 }
 
 export default function MeetupDetailsPage(props) {
+    const router = useRouter()
+
+    if (router.isFallback) return <h1>Loading...</h1>
+
     return ( 
         <>
             <Head>
