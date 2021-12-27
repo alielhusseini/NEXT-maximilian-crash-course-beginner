@@ -82,7 +82,7 @@ export default function MeetupDetailsPage(props) {
 }
 
 /*
- getStaticPaths is a function you need to export in a page component file, if it's a dynamic page & you're using getStaticProps
+ getStaticPaths is a function you need to export in a page component file, if it's a dynamic page & you're using getStaticProps (build time) : creating pages with some ids (pointed in getStaticPaths) on build time
 
  getStaticProps: a page is pre-generated during the build process --> nextJS needs to pre-generate all versions of the dynamic pages in advance for all the supported ids 
  ==> we use getStaticPaths which returns an object with paths key (array)
