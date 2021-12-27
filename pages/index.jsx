@@ -119,6 +119,7 @@ export default function HomePage(props) {
     > How ? --> export function getServerSideProps which returns an object that also has props object
     > You recieve a parameter called context, from which you can access the req & res object (like in nodeJS) / you don't return a res but an object with props object which holds the props for this page component function
     > Is good for the authentication purposes
+    > For pages where at build time template would't make sense (deploying everytime is costly & each page is would look differently according to the logged user)
     > You wait for your page to be generated for every incoming req
     > Slower than Static Generation (if data doesn't change frequently Static Generation is better)
      
