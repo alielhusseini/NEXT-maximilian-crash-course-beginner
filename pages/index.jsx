@@ -1,8 +1,10 @@
 // localhost:3000/
 import { useState, useEffect } from 'react'
 import MeetupList from '../components/meetups/MeetupList'
+import { MongoClient } from 'mongodb' // it won't appear in the bundle for the client since we are using this import in the getStaticProps(which will be executed during build only)
+import Head from 'next/head'
 
-const DUMMY_MEETUPS =  [{
+const DUMMY_MEETUPS = [{
         id: 'm1',
         title: 'A First Meetup',
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/640px-Stadtbild_M%C3%BCnchen.jpg',
@@ -28,9 +30,26 @@ const DUMMY_MEETUPS =  [{
 export async function getStaticProps(context) { // it can be async or not
     // fetch data from API or DB
     // read data from fs
+
+    // since these 3 lines are used often we could create a function for it
+    // here this fetch wasn't in the api folder as an example yet it's better to write it in the api folder
+    const client = await MongoClient.connect(process.env.CONNECTION_URL)
+    const db = client.db()
+    const meetupsCollection = db.collection('meetups')
+
+    const meetups = await meetupsCollection.find().toArray()
+    client.close()
+
     return {
         props: {
-            meetups: DUMMY_MEETUPS // the data will be loaded in the getStaticProps (during build)
+            meetups: meetups.map(meetup => ( // the data will be loaded in the getStaticProps (during build)
+                {
+                    title: meetup.title,
+                    address: meetup.address,
+                    image: meetup.image,
+                    id: meetup._id.toString(),
+                }
+            ))
         },
         revalidate: 10 // this page will be generated on the server at least every 10s if there are req to this page --> regenerated will replace pregenerated ==> you ensure  your data is never older than 10s
     }
@@ -58,7 +77,15 @@ export default function HomePage(props) {
     //     setLoadedMeetups(DUMMY_MEETUPS)
     // }, [])
     console.log(process.env.NEXT_PUBLIC_TEST)
-    return <MeetupList meetups={props.meetups} />
+    return (
+        <>
+            <Head>
+                <title>React Meetups</title>
+                <meta name='description' content='Browse a huge list of highly active React meetups' />
+            </Head>
+            <MeetupList meetups = { props.meetups } />
+        </>
+    )
 }
 
 /*
@@ -78,7 +105,7 @@ export default function HomePage(props) {
     > Always return an object, with a props object from getStaticProps that the component function will recieve as props
     > If the data does change more frequently, we can add an additional object to the return called revalidate which will unlock a feature called incremental static generation
     > The object revalidate will take a number, & this number is the number of sec nextJS will wait until it regenerates this page for an incoming req --> this page will not be just generated during the build process but also every number of sec on the server (at least if there req to this page), thus it will be re-pre-rendered on the server after deployment every number of sec (no need to rebuild & redeploy)
-    > You recieve a parameter called context which will allow you to access the
+    > You recieve a parameter called context which will allow you to access diff props like params
     > Uses caching of the pre-generated page
 
  Sometimes a regular update after build & deployment is not enough even if the validate is set to 1s, sometimes you need to regenerate the page for every incoming req, so you want to pre-generate the page dynamically on the fly after deployment on the server (not during the build nor after every couple of sec but for every req)

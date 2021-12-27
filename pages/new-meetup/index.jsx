@@ -2,6 +2,7 @@
 import NewMeetupForm from '../../components/meetups/NewMeetupForm'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 export default function NewMeetupPage() {
     const router = useRouter()
@@ -21,5 +22,13 @@ export default function NewMeetupPage() {
         router.push('/')
     }
 
-    return <NewMeetupForm onAddMeetup={addMeetupHandler} />
+    return (
+        <>
+            <Head>
+                <title>React Meetups</title>
+                <meta name='description' content='Browse a huge list of highly active React meetups' />
+            </Head>
+            <NewMeetupForm onAddMeetup={addMeetupHandler} />
+        </>
+    )
 }
