@@ -96,7 +96,7 @@ export default function HomePage(props) {
  - not all pages need the pre-rendering like the new-meetup page (form), it can be static (static html with no content (no initial props))
  - Two forms of pre-rendering: Static Generation & Server-side Rendering:
 
- 1) Static Generation SSG(static side generation) | ISG (incremental side generation, if it has revalidate) (for pages that don't get updated frequently like personal blogs):
+ 1) Static Generation SSG(static side generation) | ISR(incremental side re-generation, if it has revalidate) (for pages that don't get updated frequently like personal blogs):
     > Only for components inside the pages folder (function components)
     > For pages & their contents that don't change all the time
     > It's pre-rendered when you build the nextJS project for production (not pre-rendered on the fly on the server when a req is made)
@@ -113,7 +113,7 @@ export default function HomePage(props) {
 
  Sometimes a regular update after build & deployment is not enough even if the validate is set to 1s, sometimes you need to regenerate the page for every incoming req, so you want to pre-generate the page dynamically on the fly after deployment on the server (not during the build nor after every couple of sec but for every req)
 
- 2) Server-side Rendering (for pages where data is changing frequently & if you need to access the incoming req object):
+ 2) Server-side Rendering(SSR) (for pages where data is changing frequently & if you need to access the incoming req object):
     > Will not run during the build process but always on the server after deployment with each req
     > Any code you write here will always run on the server not on the client, you can also use operations that use credentials that should not be exposed to your users
     > How ? --> export function getServerSideProps which returns an object that also has props object
