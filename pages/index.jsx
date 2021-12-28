@@ -106,7 +106,7 @@ export default function HomePage(props) {
     > Any code written in getStaticProps will never end up nor be executed on the client side (this code is executed during the build process / not on the server nor on the clients(browser/machine) of your visitors)
     > You can write any code in getStaticProps that would normally run on a server (access a file system or connect securely to a db)
     > Always return an object, with a props object from getStaticProps that the component function will recieve as props
-    > If the data does change more frequently, we can add an additional object to the return called revalidate which will unlock a feature called incremental static generation
+    > If the data does change more frequently, we can add an additional object to the return called revalidate which will unlock a feature called incremental static regeneration
     > The object revalidate will take a number, & this number is the number of sec nextJS will wait until it regenerates this page for an incoming req --> this page will not be just generated during the build process but also every number of sec on the server (at least if there req to this page), thus it will be re-pre-rendered on the server after deployment every number of sec (no need to rebuild & redeploy)
     > You recieve a parameter called context which will allow you to access diff props like params
     > Uses caching of the pre-generated page
