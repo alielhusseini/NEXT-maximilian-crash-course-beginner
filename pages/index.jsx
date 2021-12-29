@@ -113,10 +113,11 @@ export default function HomePage(props) {
 
  Sometimes a regular update after build & deployment is not enough even if the validate is set to 1s, sometimes you need to regenerate the page for every incoming req, so you want to pre-generate the page dynamically on the fly after deployment on the server (not during the build nor after every couple of sec but for every req)
 
- 2) Server-side Rendering(SSR) (for pages where data is changing frequently & if you need to access the incoming req object):
-    > Will not run during the build process but always on the server after deployment with each req
+ 2) Server-side Rendering(SSR) (for pages where data is changing frequently & if you need to access the incoming req object for token and for personalization):
+    > Will not run during the build process but always on the server after deployment with each req (after every req)
     > Any code you write here will always run on the server not on the client, you can also use operations that use credentials that should not be exposed to your users
     > How ? --> export function getServerSideProps which returns an object that also has props object
+    > The freshest(most recent data)
     > You recieve a parameter called context, from which you can access the req & res object (like in nodeJS) / you don't return a res but an object with props object which holds the props for this page component function
     > Is good for the authentication purposes
     > For pages where at build time template would't make sense (deploying everytime is costly & each page is would look differently according to the logged user)
