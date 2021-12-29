@@ -52,6 +52,8 @@ export async function getStaticProps(context) { // during build time
 
     const meetup = await meetupsCollection.findOne({ _id: ObjectId(meetupId) })
     client.close()
+    
+    if (!meetup._id) return { notFound: true } // will return 404 page
 
     return {
         props: {
