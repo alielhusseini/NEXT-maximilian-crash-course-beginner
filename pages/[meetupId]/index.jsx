@@ -71,7 +71,7 @@ export async function getStaticProps(context) { // during build time
 export default function MeetupDetailsPage(props) {
     const router = useRouter()
 
-    if (router.isFallback) return <h1>Loading...</h1> // if fallback is true, if blocking then you won't see it (if very slow you use true if not fallback)
+    if (router.isFallback) return <h1>Loading...</h1> // if fallback is true (for big data), if blocking then you won't see it (if very slow you use true if not fallback)
 
     return ( 
         <>
